@@ -9,6 +9,7 @@
             "get": {
                 "description": "Gets `Person` objects.\nOptional query param of **size** determines\nsize of returned array\n",
 				"x-swagger-router-controller": "Default",
+				"operationId": "personsGET",
                 "parameters": [
                     {
                         "name": "size",
