@@ -3,8 +3,7 @@
 var app = require('connect')();
 var http = require('http');
 var swaggerTools = require('swagger-tools');
-var jsyaml = require('js-yaml');
-var fs = require('fs');
+
 var serverPort = 8080;
 
 // swaggerRouter configuration
@@ -15,8 +14,7 @@ var options = {
 };
 
 // The Swagger document (require it, build it programmatically, fetch it from a URL, ...)
-var spec = fs.readFileSync('./api/swagger.yaml', 'utf8');
-var swaggerDoc = jsyaml.safeLoad(spec);
+var swaggerDoc = require('./api/swagger.json');
 
 // Initialize the Swagger middleware
 swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
@@ -33,7 +31,7 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
   app.use(middleware.swaggerUi());
 
   // Start the server
-  http.createServer(app).listen(serverPort, function () {
+  http.createServer(app).listen(process.env.PORT || 8080 , function () {
     console.log('Your server is listening on port %d (http://localhost:%d)', serverPort, serverPort);
     console.log('Swagger-ui is available on http://localhost:%d/docs', serverPort);
   });
